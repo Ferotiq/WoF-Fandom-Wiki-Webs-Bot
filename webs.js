@@ -193,8 +193,10 @@ bot.on('message', async message => {
             break;
         }
         case 'status':
+        case 'st': {
             bot.commands.get('status').execute(message, args, triviaOn, modRole);
             break;
+        }
         default:
             if (!message.content.startsWith(`${prefix}m`)) message.channel.send('Unknown command, do /help or /h to get help!');
     };
