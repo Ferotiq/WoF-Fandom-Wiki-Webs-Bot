@@ -10,7 +10,7 @@ module.exports = {
     execute(message, args, modRole, onlyChannel, prefix) {
 
         // Makes sure the person issuing the command has the admin permission or the modRole
-        if (!message.member.hasPermission('ADMINISTRATOR') && !message.member.roles.cache.get(modRole)) return message.channel.send('Permission\'t');
+        if (!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send('Permission\'t');
 
         // Makes sure there is a second argument
         if (!args[1]) return message.channel.send('You didn\'t provide a second argument! (Arguments: set, view)');
