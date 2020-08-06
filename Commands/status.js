@@ -4,7 +4,7 @@ const db = require('quick.db');
 module.exports = {
     name: "status",
     description: "Shows or sets the status (on/off) of the bot",
-    aliases: ["status"],
+    aliases: ["status", "st"],
     usability: "🟧",
 
     execute(message, args, triviaOn, modRole) {
