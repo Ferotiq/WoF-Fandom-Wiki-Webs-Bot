@@ -11,9 +11,6 @@ const Discord = require('discord.js'),
     // Db is for quick.db (A fast sqlite database)
     db = require('quick.db'),
 
-    // ModMute is a new set to mute trivia mods from questions
-    modMute = new Set(),
-
     // SnudooCooldown is a new set to restrict use of the snudoo command
     snudooCooldown = new Set(),
 
@@ -147,12 +144,12 @@ bot.on('message', async message => {
     // Making sure that the author of the message is not a bot
     if (message.author.bot === true) return;
 
+    if (message.content.startsWith(`${prefix}m`)) bot.commands.get('moderation').execute(message, args, onlyChannel, prefix, modRole);
+
     // Checks to see if the channel is the only channel
     if ( /* ParseFloat is used to make sure that the onlyChannel variable is a number */ parseFloat(onlyChannel) !== 000000000000000000) {
         if (parseFloat(message.channel.id) !== parseFloat(onlyChannel)) return;
     };
-
-    if (message.content.startsWith(`${prefix}m`)) bot.commands.get('moderation').execute(message, args, onlyChannel, prefix);
 
     // Reacting to gundew on a 10% chance with the gundew emoji
     if (message.content.toLowerCase().includes('gundew')) {
