@@ -7,7 +7,7 @@ module.exports = {
     aliases: ["moderation", "m"],
     usability: "🟥",
 
-    execute(message, args, modRole, onlyChannel, prefix) {
+    execute(message, args, onlyChannel, prefix) {
 
         // Makes sure the person issuing the command has the admin permission or the modRole
         if (!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send('Permission\'t');
