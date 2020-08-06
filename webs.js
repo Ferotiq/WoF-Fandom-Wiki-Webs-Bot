@@ -141,6 +141,9 @@ bot.on('message', async message => {
         score = scores;
     }
 
+    // Run the channelupdater script
+    bot.extraScripts.get('channelupdater').execute(bot);
+
     // Making sure that the author of the message is not a bot
     if (message.author.bot === true) return;
 
