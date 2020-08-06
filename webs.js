@@ -149,7 +149,7 @@ bot.on('message', async message => {
         if (parseFloat(message.channel.id) !== parseFloat(onlyChannel)) return;
     };
 
-    if (message.content.startsWith(`${prefix}m`)) bot.commands.get('moderation').execute(message, args, modRole, onlyChannel, prefix);
+    if (message.content.startsWith(`${prefix}m`)) bot.commands.get('moderation').execute(message, args, onlyChannel, prefix);
 
     // Reacting to gundew on a 10% chance with the gundew emoji
     if (message.content.toLowerCase().includes('gundew')) {
