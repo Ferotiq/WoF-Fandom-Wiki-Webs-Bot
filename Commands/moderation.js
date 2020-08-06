@@ -7,7 +7,7 @@ module.exports = {
     aliases: ["moderation", "m"],
     usability: "🟥",
 
-    execute(message, args, onlyChannel, prefix) {
+    execute(message, args, onlyChannel, prefix, modRole) {
 
         // Makes sure the person issuing the command has the admin permission or the modRole
         if (!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send('Permission\'t');
@@ -23,21 +23,23 @@ module.exports = {
                 switch (args[2]) {
                     case 'modrole':
                         if (!args[3]) return message.channel.send('You didn\'t provide a fourth argument! (ID of a role or a mention of a role)');
-                        if (!message.guild.roles.cache.get(args[3]) && !message.mentions.roles.first()) return message.channel.send(`${args[3]} is not a valid role ID or mention`);
+                        if (!message.guild.roles.cache.get(args[3]) && !message.mentions.roles.first() && args[3] !== '000000000000000000') return message.channel.send(`${args[3]} is not a valid role ID or mention`);
                         let newModRole;
-                        if (!message.guild.roles.cache.get(args[3])) newModRole = message.mentions.roles.first().id
-                        else newModRole = message.guild.roles.cache.get(args[3]).id;
+                        if (!message.guild.roles.cache.get(args[3]) && args[3] !== '000000000000000000') newModRole = message.mentions.roles.first().id
+                        else if (message.guild.roles.cache.get(args[3]) && args[3] !== '000000000000000000') newModRole = message.guild.roles.cache.get(args[3]).id
+                        else newModRole = 000000000000000000;
                         db.set(`modRole_${message.guild.id}`, parseFloat(newModRole));
                         message.channel.send(`\`Operator Role\` set to \`${message.guild.roles.cache.get(newModRole).name}\`.`);
                         break;
                     case 'onlychannel':
                         if (!args[3]) return message.channel.send('You didn\'t provide a fourth argument! (ID of a channel or a mention of a channel)');
-                        if (!message.guild.channels.cache.get(args[3]) && !message.mentions.channels.first()) return message.channel.send(`${args[3]} is not a valid channel ID or mention`);
+                        if (!message.guild.channels.cache.get(args[3]) && !message.mentions.channels.first() && args[3] !== '000000000000000000') return message.channel.send(`${args[3]} is not a valid channel ID or mention`);
                         let newOnlyChannel;
-                        if (!message.guild.channels.cache.get(args[3])) newOnlyChannel = message.mentions.channels.first().id
-                        else newOnlyChannel = message.guild.channels.cache.get(args[3]).id;
+                        if (!message.guild.channels.cache.get(args[3]) && args[3] !== '000000000000000000') newOnlyChannel = message.mentions.channels.first().id
+                        else if(message.guild.channels.cache.get(args[3]) && args[3] !== '000000000000000000') newOnlyChannel = message.guild.channels.cache.get(args[3]).id
+                        else newOnlyChannel = 000000000000000000;
                         db.set(`onlyChannel_${message.guild.id}`, parseFloat(newOnlyChannel));
-                        message.channel.send(`\`Listener Channel\` set to \`${message.guild.channels.cache.get(newOnlyChannel).name}\`.`);
+                        message.channel.send(`\`Listener Channel\` set to \`${message.guild.channels.cache.get(newOnlyChannel).name || newOnlyChannel}\`.`);
                         break;
                     case 'prefix':
                         if (!args[3]) return message.channel.send('You didn\'t provide a fourth argument!');
@@ -53,7 +55,7 @@ module.exports = {
                 // Third Arguments
                 switch (args[2]) {
                     case 'modrole':
-                        message.reply(`Current \`Operator Role\` is \`${message.guild.roles.cache.get(`${modRole}`).name || 'Invalid or Not Set'}\`, ID: \`${modRole}\``);
+                        message.reply(`Current \`Operator Role\` is \`${message.guild.roles.cache.get(modRole.toString()).name || 'Invalid or Not Set'}\`, ID: \`${modRole}\``);
                         break;
                     case 'onlychannel':
                         message.reply(`Current \`Listener Channel\` is \`${message.guild.channels.cache.get(onlyChannel.toString()).name || 'Invalid or Not Set'}\`, ID: \`${onlyChannel}\``);
