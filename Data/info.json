@@ -1,0 +1,17 @@
+{
+    "Name": "Webs",
+    "Author": "Ferotiq",
+    "Description": "A scorekeeper bot for wings of fire.",
+    "Link": "https://bit.ly/2Ds01KK",
+    "Art": "https://bit.ly/3b56Tsu, done by Julian of the Wings of Fire Wiki",
+    "Version": "2.0.0",
+    "VersionHistory": [
+        "1.0.0: Added most commands.",
+        "1.1.0: Attemped the `leaderboard` command, touched up some other commands.",
+        "1.2.0: Added the `leaderboard` and `commands` commands, turned `rule`, `info`, and `commands` commands into embeds, introduced into the Wings of Fire Wiki server.",
+        "1.2.1: Added the `question`, `mute`, and `unmute` commands, touched up on many other commands.",
+        "1.2.2: Added per guild scores with round callback using the `r` command and other features, allowed in other servers.",
+        "1.2.3: Touched up on the `score` command, removed `commands` and `info` commands, replaced them with `help` command (automated with the command handler), changed `leaderboard` to not use an array, changed all mod commands to be usable when trivia is off.",
+        "2.0.0: Completely rebuilt: added in `help`, `moderation`, `reload`, `score`, `status`, and `uptime` commands, removed or moved tons of unnecessary commands, added in a github repository that everyone can look at, added comments to almost every bit of code, made the code better and more neat."
+    ]
+}

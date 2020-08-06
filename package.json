@@ -1,0 +1,12 @@
+{
+  "name": "webs",
+  "version": "2.0.0",
+  "description": "A Scorekeeper for Wings of Fire Discord Servers",
+  "main": "webs.js",
+  "author": "Ferotiq",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.2.0",
+    "quick.db": "^7.1.1"
+  }
+}
