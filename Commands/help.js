@@ -177,23 +177,24 @@ module.exports = {
                             inline: true
                         }, {
                             name: 'Bot Link:',
-                            value: `\`${Link}\``,
+                            value: `${Link}`,
                             inline: true
                         }, {
                             name: 'Bot Art:',
-                            value: `\`${Art}\``,
+                            value: `${Art}`,
                             inline: true
                         }, {
                             name: 'Bot Version:',
                             value: `\`${Version}\``,
                             inline: true
-                        }, {
-                            name: 'Bot Version History',
-                            value: `\`${VersionHistory}\``,
-                            inline: true
                         })
                         .setURL('https://discord.gg/Buq9dCP')
                         .setFooter('Webs Trivia™️');
+
+                        VersionHistory
+                        .forEach(version => {
+                            infoEmbed.addField(version.split(":")[0], version.split(":")[1])
+                        });
 
                     // Sending the embed to the author in DMs
                     message.author.send(infoEmbed);
