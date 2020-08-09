@@ -37,20 +37,20 @@ for (const file of commandFiles) {
 };
 
 // Creating a new Discord Collection for all of the extra scripts
-// Creating the collection in the bot.extraScripts variable
-bot.extraScripts = new Discord.Collection();
+// Creating the collection in the bot.scripts variable
+bot.scripts = new Discord.Collection();
 
 // Creating a new variable as an array for all of the extra script files
-const extraScriptFiles = fs.readdirSync('./ExtraScripts').filter(file => file.endsWith('.js'));
+const scriptFiles = fs.readdirSync('./ExtraScripts').filter(file => file.endsWith('.js'));
 
 // For loop making sure that all of the files are inserted in the collection
-for (const file of extraScriptFiles) {
+for (const file of scriptFiles) {
 
     // Creating a new variable for requiring the extra script
-    const extraScript = require(`./ExtraScripts/${file}`);
+    const script = require(`./ExtraScripts/${file}`);
 
     // Setting the extra script into the collection under its name
-    bot.extraScripts.set(extraScript.name, extraScript);
+    bot.scripts.set(script.name, script);
 };
 
 // Declaring an uptime variable
@@ -63,7 +63,7 @@ bot.on('ready', () => {
 });
 
 // Start running the status script to change the bot status
-bot.extraScripts.get('status').execute(bot);
+bot.scripts.get('status').execute(bot);
 
 // Message listener to run all of the commands asynchronously
 bot.on('message', async message => {
@@ -139,12 +139,12 @@ bot.on('message', async message => {
     }
 
     // Run the channelupdater script
-    bot.extraScripts.get('channelupdater').execute(bot);
+    bot.scripts.get('channelupdater').execute(bot);
 
     // Making sure that the author of the message is not a bot
     if (message.author.bot === true) return;
 
-    if (message.content.startsWith(`${prefix}m`)) bot.commands.get('moderation').execute(message, args, onlyChannel, prefix, modRole);
+    if (message.content.startsWith(`${prefix}m`) || message.content.startsWith(`${prefix}moderation`)) bot.commands.get('moderation').execute(message, args, onlyChannel, prefix, modRole);
 
     // Checks to see if the channel is the only channel
     if ( /* ParseFloat is used to make sure that the onlyChannel variable is a number */ parseFloat(onlyChannel) !== 000000000000000000) {
@@ -158,9 +158,7 @@ bot.on('message', async message => {
     };
 
     // Running the snudoo command if someone says "snudoo"
-    if (message.content.toLowerCase().includes('snudoo')) {
-        bot.extraScripts.get('snudoo').execute(message, snudooCooldown, bot, triviaOn, triviaOffMessage);
-    };
+    if (message.content.toLowerCase().includes('snudoo')) bot.scripts.get('snudoo').execute(message, snudooCooldown, bot, triviaOn, triviaOffMessage);
 
     // Making sure that the message starts with the prefix to run the next commands
     if (message.content.startsWith(prefix) === false) return;
@@ -195,7 +193,7 @@ bot.on('message', async message => {
             break;
         }
         default:
-            if (!message.content.startsWith(`${prefix}m`)) message.channel.send('Unknown command, do /help or /h to get help!');
+            if (!message.content.startsWith(`${prefix}m`) && !message.content.startsWith(`${prefix}moderation`)) message.channel.send('Unknown command, do /help or /h to get help!');
     };
 });
 

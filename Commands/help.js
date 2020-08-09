@@ -1,15 +1,14 @@
 // Getting the Discord Library
 const Discord = require('discord.js'),
     db = require('quick.db'),
-    {
-        Name,
-        Author,
-        Description,
-        Link,
-        Art,
-        Version,
-        VersionHistory
-    } = require('../Data/info.json');
+    info = require('../Data/info.json'),
+    Name = info.Name,
+    Description = info.Description,
+    Author = info.Author,
+    Link = info.Link,
+    Art = info.Art,
+    Version = info.Version,
+    VersionHistory = info.VersionHistory;
 
 module.exports = {
     name: "help",
@@ -22,14 +21,14 @@ module.exports = {
         // Checking if there isn't a second argument, if there isn't, send a default help embed
         if (!args[1]) {
 
-            // Grabs all of the information from each command file and puts it into a string array
-            const helpArray = bot.commands
-                .map(value => `**Name:** \`${value.name}\`, **Aliases:** \`${value.aliases.join(", ")}\`, **Usability:** ${value.usability}, **Description:** \`${value.description}\``);
+            // Grabs all of the names of the commands and puts it in a string array
+            const helpArray = new Array();
+            bot.commands.forEach(command => helpArray.push(command.name));
 
             // Puts all of the information in an embed
             const helpEmbed = new Discord.MessageEmbed()
                 .setTitle(`${message.guild.member(bot.user).displayName}: \`Help\``)
-                .setDescription(`Here are all of the commands! (For Usability, 🟩 is full usability to everyone, 🟧 is limited usability, and 🟥 is no usability)`)
+                .setDescription(`Here are all of the commands!`)
                 .setColor(0x2ca6a1)
                 .setAuthor(message.member.displayName)
                 .setThumbnail(message.author.avatarURL())
@@ -50,7 +49,7 @@ module.exports = {
                 case 'rule': {
 
                     // Checking if the member has the permission to use this argument
-                    if (!message.member.hasPermission('ADMINISTRATOR') && !message.member.roles.cache.get(modRole)) return message.reply('Permission\'t');
+                    if (!message.member.hasPermission('ADMINISTRATOR') && !message.member.roles.cache.get(modRole.toString())) return message.reply('Permission\'t');
 
                     // Grabbing the rules from the database
                     let rules = db.fetch(`rules_${message.guild.id}`);
@@ -158,7 +157,6 @@ module.exports = {
                     // Creating an embed with all information in it
                     const infoEmbed = new Discord.MessageEmbed()
                         .setTitle(`${message.guild.member(bot.user).displayName}: \`Info\``)
-                        .setDescription(``)
                         .setColor(0x2ca6a1)
                         .setAuthor(message.member.displayName)
                         .setThumbnail(message.author.avatarURL())
@@ -191,7 +189,7 @@ module.exports = {
                         .setURL('https://discord.gg/Buq9dCP')
                         .setFooter('Webs Trivia™️');
 
-                        VersionHistory
+                    VersionHistory
                         .forEach(version => {
                             infoEmbed.addField(version.split(":")[0], version.split(":")[1])
                         });
@@ -214,7 +212,7 @@ module.exports = {
                         // Puts all of it's information in an embed
                         const helpCommandEmbed = new Discord.MessageEmbed()
                             .setTitle(`${message.guild.member(bot.user).displayName}: \`Help\``)
-                            .setDescription(`Here is all of the information for the \`${command.name}\` command!`)
+                            .setDescription(`Here is all of the information for the \`${command.name}\` command! (For usability, 🟩 is full usability to everyone, 🟧 is limited usability, and 🟥 is no usability)`)
                             .setColor(0x2ca6a1)
                             .setAuthor(message.member.displayName)
                             .setThumbnail(message.author.avatarURL())

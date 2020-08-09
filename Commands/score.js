@@ -33,7 +33,7 @@ module.exports = {
         } else {
 
             // Stopping the code if the member does not have the correct permissions
-            if (!message.member.hasPermission('ADMINISTRATOR') && !message.member.roles.cache.get(modRole)) return message.channel.send('Permission\'t');
+            if (!message.member.hasPermission('ADMINISTRATOR') && !message.member.roles.cache.get(modRole.toString())) return message.reply('Permission\'t');
 
             // Second Arguments
             switch (args[1]) {

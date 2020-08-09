@@ -5,8 +5,9 @@ module.exports = {
     usability: "🟥",
 
     execute(message, args, bot) {
+        
         // Checks if the author is the Dev (Ferotiq)
-        if (message.author.id !== '325757696118882305') return message.channel.send('Permission\'t');
+        if (message.author.id !== '325757696118882305') return message.reply('Permission\'t');
 
         // Checks if there is a second argument
         if (!args[1]) return message.channel.send('You didn\'t specify a command!');

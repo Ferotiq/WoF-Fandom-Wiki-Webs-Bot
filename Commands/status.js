@@ -14,7 +14,7 @@ module.exports = {
         else {
 
             // Checks if the member has the permission to use the rest of the arguments
-            if (!message.member.hasPermission('ADMINISTRATOR') && !message.member.roles.cache.get(modRole)) return message.reply('Permission\'t');
+            if (!message.member.hasPermission('ADMINISTRATOR') && !message.member.roles.cache.get(modRole.toString())) return message.reply('Permission\'t');
 
             // Second Arguments
             switch (args[1]) {
